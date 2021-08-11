@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import { StyleSheet, Text, View, TouchableHighlight } from 'react-native';
 import ClassList from '../../components/classList';
+import { MaterialIcons } from '@expo/vector-icons';
 
 export default function TeacherCourseDetails ({ route, navigation }) {
   let id = route.params.id
@@ -8,6 +9,10 @@ export default function TeacherCourseDetails ({ route, navigation }) {
   const pressHandler = id => {
     navigation.navigate('ClassDetails', { id })
   }
+
+  const addCourse = () => {
+    navigation.navigate('CreateClass', { id })
+  } 
 
   let [ course, setCourse ] = useState(false)
 
@@ -51,6 +56,10 @@ export default function TeacherCourseDetails ({ route, navigation }) {
       <Text numberOfLine={2} style={{fontSize:20,}}>{details.desc}</Text>
 
       <ClassList classes={classes} pressHandler={pressHandler} />
+      
+      <TouchableHighlight style={styles.actionButton} onPress={addCourse}>
+        <MaterialIcons name="add" size={50} color="white" />
+      </TouchableHighlight>
     </View>
   );
 }
@@ -58,9 +67,16 @@ export default function TeacherCourseDetails ({ route, navigation }) {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor:"#008B8B",
+    // backgroundColor:"#008B8B",
     justifyContent:"flex-start",
     paddingTop:40,
     paddingLeft:40,
   },
+  actionButton: {
+      backgroundColor: 'lightblue',
+      position: 'absolute',
+      right: 25,
+      bottom: 25,
+      borderRadius: 25
+  }
 });

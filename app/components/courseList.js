@@ -1,9 +1,9 @@
 import React from 'react'
-import { FlatList, StyleSheet } from 'react-native'
+import { FlatList, RefreshControl, StyleSheet } from 'react-native'
 import CourseCard from './courseCard'
 
 
-export default function CourseList ({ courses, pressHandler }) {
+export default function CourseList ({ courses, pressHandler, refresh, refreshing }) {
     const mapper = ({ item: course }) => {
         return (
             <CourseCard
@@ -18,6 +18,12 @@ export default function CourseList ({ courses, pressHandler }) {
 
     return (
         <FlatList
+            refreshControl={
+                <RefreshControl
+                    onRefresh={refresh}
+                    refreshing={refreshing}
+                />
+            }
             style={styles.list}
             keyExtractor={item => item.courseid}
             data={courses}

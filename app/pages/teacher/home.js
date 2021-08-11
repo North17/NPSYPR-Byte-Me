@@ -13,6 +13,24 @@ export default function StudentHome ({ navigation }) {
         navigation.navigate('CreateCourse')
     } 
 
+    let [ refreshing, setRefreshing ] = useState(false)
+    const refresh = () => {
+        setRefreshing(true)
+        fetch('https://byte-me-npsypr.el.r.appspot.com/teachers/courses?userId='+context.id)
+        .then(res => {
+            if (res.status >= 500) {
+                return false
+            }
+            return res.json()
+        })
+        .then(data => {
+            if (data) {
+                setRefreshing(false)
+                setCourses(data.message)
+            }
+        })
+    }
+
     const [ courses, setCourses ] = useState([])
     const context = useContext(UserContext)
 
@@ -28,8 +46,6 @@ export default function StudentHome ({ navigation }) {
             if (data) {
                 setCourses(data.message)
             }
-            console.log(data)
-
         })
     },
     []
@@ -51,6 +67,8 @@ export default function StudentHome ({ navigation }) {
             <CourseList
                 courses={courses}
                 pressHandler={pressHandler}
+                refresh={refresh}
+                refreshing={refreshing}
             />
             <TouchableHighlight style={styles.actionButton} onPress={addCourse}>
                 <MaterialIcons name="add" size={50} color="white" />

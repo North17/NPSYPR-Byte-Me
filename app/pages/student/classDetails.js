@@ -48,7 +48,7 @@ export default function StudentCourseDetails ({ route }) {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor:"#008B8B",
+    // backgroundColor:"#008B8B",
     justifyContent:"flex-start",
     paddingTop:40,
     paddingLeft:40,
